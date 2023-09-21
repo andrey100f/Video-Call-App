@@ -1,7 +1,7 @@
 package com.andrei.videocall;
 
 import com.andrei.videocall.domain.User;
-import com.andrei.videocall.service.IUserService;
+import com.andrei.videocall.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,12 +14,15 @@ public class VideocallApplication {
 		SpringApplication.run(VideocallApplication.class, args);
 	}
 
-	public CommandLineRunner commandLineRunner(IUserService service) {
+	@Bean
+	public CommandLineRunner commandLineRunner(
+			UserService service
+	) {
 		return args -> {
 			service.register(User.builder()
-							.username("Ali")
-							.email("ali@mail.com")
-							.password("aaa")
+					.username("Ali")
+					.email("ali@mail.com")
+					.password("aaa")
 					.build());
 
 			service.register(User.builder()
@@ -29,11 +32,10 @@ public class VideocallApplication {
 					.build());
 
 			service.register(User.builder()
-					.username("Anna")
+					.username("Anny")
 					.email("anna@mail.com")
 					.password("aaa")
 					.build());
 		};
 	}
-
 }

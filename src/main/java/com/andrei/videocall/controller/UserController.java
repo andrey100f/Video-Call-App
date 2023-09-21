@@ -1,7 +1,7 @@
 package com.andrei.videocall.controller;
 
 import com.andrei.videocall.domain.User;
-import com.andrei.videocall.service.IUserService;
+import com.andrei.videocall.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.IntStream;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -17,21 +16,21 @@ import java.util.stream.IntStream;
 @CrossOrigin(origins = "*")
 @Slf4j
 public class UserController {
-    private final IUserService service;
+    private final UserService service;
 
     @PostMapping
-    public void register(User user) {
+    public void register(@RequestBody User user) {
         service.register(user);
     }
 
     @PostMapping("/login")
-    public User login(User user) {
+    public User login(@RequestBody User user) {
         return service.login(user);
     }
 
     @PostMapping("/logout")
-    public void logout(String email) {
-        service.logout(email);
+    public void logout(@RequestBody User user) {
+        service.logout(user);
     }
 
     @GetMapping

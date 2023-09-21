@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 @Service
-public class UserService implements IUserService {
+public class UserService {
     private static final List<User> USERS_LIST = new ArrayList<>();
 
     public void register(User user) {
@@ -22,19 +22,16 @@ public class UserService implements IUserService {
                 .findAny()
                 .orElseThrow(() -> new RuntimeException("User not found"));
         var cUser = USERS_LIST.get(userIndex);
-
-        if(!cUser.getPassword().equals(user.getPassword())) {
+        if (!cUser.getPassword().equals(user.getPassword())) {
             throw new RuntimeException("Password incorrect");
         }
-
         cUser.setStatus("online");
-
         return cUser;
     }
 
-    public void logout(String email) {
+    public void logout(User user) {
         var userIndex = IntStream.range(0, USERS_LIST.size())
-                .filter(i -> USERS_LIST.get(i).getEmail().equals(email))
+                .filter(i -> USERS_LIST.get(i).getEmail().equals(user.getEmail()))
                 .findAny()
                 .orElseThrow(() -> new RuntimeException("User not found"));
         USERS_LIST.get(userIndex).setStatus("offline");
